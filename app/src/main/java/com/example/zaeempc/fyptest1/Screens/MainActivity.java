@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
             Log.i("State","Connected!!!!!");
         }
         else{
-            Log.i("State","Not Connected!!!!!");
+            Log.i("State", "Not Connected!!!!!");
         }
     }
 
@@ -84,13 +84,21 @@ public class MainActivity extends AppCompatActivity
         Initiator.getInstance().setConnectivityListener(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // register connection status listener
+        Initiator.getInstance().setConnectivityListener(this);
+    }
+
     /**
      * Callback will be triggered when there is change in
      * network connection
      */
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        Log.i("Status","Change in state detected");
+        Log.i("Status", "Change in state detected switch_state-->" + switch_state );
         if(switch_state == 1)
             startService(new Intent(getBaseContext(), BackgroundService.class));
 

@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Screens.MainActivity">
+    tools:context=".Screens.MainActivity"
+    android:onClick="ChangeState">
 
     <Button
         android:id="@+id/chCon"
@@ -16,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="TextView"
@@ -59,6 +61,17 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/chCon"
         android:layout_alignEnd="@+id/chCon" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:id="@+id/toggleButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="ChangeState"
+        android:textOn="On"
+        android:textOff="Off" />
 
 
 </RelativeLayout>

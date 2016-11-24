@@ -66,9 +66,6 @@ public class MainActivity extends AppCompatActivity
         if( state.equals("On")){
             Log.i("Check", "Launch Service");
             switch_state= 1;
-           /* Intent intent = new Intent(this,NetworkChangeReceiver.class);
-            NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver();
-            networkChangeReceiver.onReceive(getApplicationContext(), intent);*/
             startService(new Intent(getBaseContext(), BackgroundService.class));
         }
         else if (state.equals("Off")){

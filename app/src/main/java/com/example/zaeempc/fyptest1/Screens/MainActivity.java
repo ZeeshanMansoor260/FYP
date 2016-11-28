@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity
         Initiator.getInstance().setConnectivityListener(this);
     }
 
+    public void ChangeScreen(View view){
+        Intent intent = new Intent(MainActivity.this, Permissions.class);
+        startActivity(intent);
+    }
     /**
      * Callback will be triggered when there is change in
      * network connection

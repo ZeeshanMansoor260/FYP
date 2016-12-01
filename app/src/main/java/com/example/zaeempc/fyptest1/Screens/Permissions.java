@@ -3,6 +3,7 @@ package com.example.zaeempc.fyptest1.Screens;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,14 +14,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.zaeempc.fyptest1.Managers.Manager;
 import com.example.zaeempc.fyptest1.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Permissions extends AppCompatActivity {
     ListView myListView;
     ArrayList<String> myStringArray1;
+    public static int ID_USERAPPS = 1;
+    public static int ID_SYSTEMAPPS = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,117 +44,21 @@ public class Permissions extends AppCompatActivity {
         myListView = (ListView) findViewById(R.id.listView);
         myStringArray1 = new ArrayList<String>();
 
-
-   /*     StringBuffer appNameAndPermissions=new StringBuffer();
-        PackageManager pm = getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo applicationInfo : packages) {
-            Log.i("test", "App: " + applicationInfo.name + " Package: " + applicationInfo.packageName);
-            boolean check = isUserApp(applicationInfo);
-            if(check){
-                Log.i("test", "------USER APP------" + applicationInfo.packageName);
-                try {
-                    PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName, PackageManager.GET_PERMISSIONS);
-                    appNameAndPermissions.append(packageInfo.packageName+"*:\n");
-                    //Get Permissions
-                    String[] requestedPermissions = packageInfo.requestedPermissions;
-                    if(requestedPermissions != null) {
-                        for (int i = 0; i < requestedPermissions.length; i++) {
-                            Log.i("test", requestedPermissions[i]);
-                            myStringArray1.add("Package Name: " + applicationInfo.packageName + "\nPermissions: " + requestedPermissions[i]);
-                            appNameAndPermissions.append(requestedPermissions[i]+"\n");
-                        }
-                        appNameAndPermissions.append("\n");
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                Log.i("test", "------SYSTEM APP------" + applicationInfo.packageName);
-            }
-
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, myStringArray1);
-        myListView.setAdapter(adapter);*/
-    }
-
-    boolean isUserApp(ApplicationInfo ai) {
-        int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
-        return (ai.flags & mask) == 0;
     }
 
     public void SystemApps(View view){
-        myStringArray1.clear();
-
-        StringBuffer appNameAndPermissions=new StringBuffer();
-        PackageManager pm = getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo applicationInfo : packages) {
-            Log.i("test", "App: " + applicationInfo.name + " Package: " + applicationInfo.packageName);
-            boolean check = isUserApp(applicationInfo);
-            if(!check){
-                Log.i("test", "------SYSTEM APP------" + applicationInfo.packageName);
-                try {
-                    PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName, PackageManager.GET_PERMISSIONS);
-                    appNameAndPermissions.append(packageInfo.packageName+"*:\n");
-                    //Get Permissions
-                    String[] requestedPermissions = packageInfo.requestedPermissions;
-                    if(requestedPermissions != null) {
-                        for (int i = 0; i < requestedPermissions.length; i++) {
-                            Log.i("test", requestedPermissions[i]);
-                            myStringArray1.add("Package Name: " + applicationInfo.packageName + "\nPermissions: " + requestedPermissions[i]);
-                            appNameAndPermissions.append(requestedPermissions[i]+"\n");
-                        }
-                        appNameAndPermissions.append("\n");
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                Log.i("test", "------USER APP------" + applicationInfo.packageName);
-            }
-
-        }
+        Manager manager = new Manager();
+        Log.i("test", "---Launching Manager---" );
+        myStringArray1 = manager.permissionManager(getPackageManager(), ID_SYSTEMAPPS);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, myStringArray1);
         myListView.setAdapter(adapter);
     }
 
-    public void UserApps(View view){
-        myStringArray1.clear();
-        StringBuffer appNameAndPermissions=new StringBuffer();
-        PackageManager pm = getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo applicationInfo : packages) {
-            Log.i("test", "App: " + applicationInfo.name + " Package: " + applicationInfo.packageName);
-            boolean check = isUserApp(applicationInfo);
-            if(check){
-                Log.i("test", "------User APP------" + applicationInfo.packageName);
-                try {
-                    PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName, PackageManager.GET_PERMISSIONS);
-                    appNameAndPermissions.append(packageInfo.packageName+"*:\n");
-                    //Get Permissions
-                    String[] requestedPermissions = packageInfo.requestedPermissions;
-                    if(requestedPermissions != null) {
-                        for (int i = 0; i < requestedPermissions.length; i++) {
-                            Log.i("test", requestedPermissions[i]);
-                            myStringArray1.add("Package Name: " + applicationInfo.packageName + "\nPermissions: " + requestedPermissions[i]);
-                            appNameAndPermissions.append(requestedPermissions[i]+"\n");
-                        }
-                        appNameAndPermissions.append("\n");
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                Log.i("test", "------System APP------" + applicationInfo.packageName);
-            }
-
-        }
+    public void UserApps(View view) {
+        Manager manager = new Manager();
+        Log.i("test", "---Launching Manager---" );
+        myStringArray1 = manager.permissionManager(getPackageManager(), ID_USERAPPS);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, myStringArray1);
         myListView.setAdapter(adapter);

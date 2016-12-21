@@ -12,12 +12,24 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import com.example.zaeempc.fyptest1.Managers.Manager;
 import com.example.zaeempc.fyptest1.R;
 import com.example.zaeempc.fyptest1.Service.BackgroundService;
 import com.example.zaeempc.fyptest1.Service.Initiator;
 import com.example.zaeempc.fyptest1.Service.NetworkChangeReceiver;
+
+/* For testing by Zaeem ---> start*/
+import com.example.zaeempc.fyptest1.Database.UsersTable.getUsers;
+import com.example.zaeempc.fyptest1.Database.UsersTable.setUsers;
+import com.example.zaeempc.fyptest1.Database.AccesspointsTable.getAP;
+import com.example.zaeempc.fyptest1.Database.AccesspointsTable.setAP;
+import com.example.zaeempc.fyptest1.Database.ApplicationsTable.getApps;
+import com.example.zaeempc.fyptest1.Database.ApplicationsTable.setApps;
+
+import java.util.Date;
+/* For testing by Zaeem ---> end*/
+
+
 
 public class MainActivity extends AppCompatActivity
         implements NetworkChangeReceiver.ConnectivityReceiverListener{
@@ -41,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         tb=(ToggleButton)findViewById(R.id.toggleButton);
 
         bt = (Button)findViewById(R.id.chCon);
+
         //bt.setOnClickListener(this);
         checkConnection();
         bool = isMyServiceRunning(BackgroundService.class);
@@ -67,6 +80,33 @@ public class MainActivity extends AppCompatActivity
             Log.i("Check", "Launch Service");
             switch_state= 1;
             startService(new Intent(getBaseContext(), BackgroundService.class));
+
+        /* Testing Section for Zaeem ---> start */
+            long oldtime1 = (new Date()).getTime();
+        /*Start of Test Code by Zaeem for setter ---> table: Accesspoints*/
+            setAP su = new setAP();
+            su.setter("Zaeem","NUST","low");
+            Log.v("setAP", "trying to insert data" );
+        /*End by Zaeem*/
+            long newtime1 = (new Date()).getTime();
+            long diffinMilli1 = newtime1 - oldtime1;
+            long diff1 = diffinMilli1 / 1000;
+            Log.v("setAP", "Time took to send data:" + newtime1 + " " + oldtime1 + " " + diffinMilli1 + " ms");
+
+
+            long oldtime2 = (new Date()).getTime();
+        /*Start of Test Code by Zaeem for getter ---> table: Accesspoints*/
+            getAP gu = new getAP();
+            String pref = gu.getter("Zaeem","NUST");
+            Log.v("getAP", "trying to fetch data" );
+            Log.v("getAP", "preference:" + pref );
+        /*End by Zaeem*/
+            long newtime2 = (new Date()).getTime();
+            long diffinMilli2 = newtime2 - oldtime2;
+            long diff2 = diffinMilli2 / 1000;
+            Log.v("getAP", "Time took to get data:" + newtime2 + " " + oldtime2 + " " + diffinMilli2 + " ms");
+        /* Testing Section for Zaeem ---> end */
+
         }
         else if (state.equals("Off")){
             Log.i("Check", "Destroy Service");
